@@ -1,17 +1,34 @@
 use openidea_plugin::syntax::{Highlight, SyntaxProvider, Token};
-use openidea_plugin::{Error, Invocation, Plugin, register_plugin};
+use openidea_plugin::{Context, Error, Invocation, Plugin, register_plugin};
+
+mod setup;
 
 #[derive(Default)]
 pub struct Jslt;
 
 impl Plugin for Jslt {
+    fn activate(&mut self, _ctx: &Context) -> Result<(), Error> {
+        setup::check(false);
+        Ok(())
+    }
+
     fn run_command(
         &mut self,
         id: &str,
         _ctx: &Invocation,
         _arg: Option<&str>,
     ) -> Result<Option<String>, Error> {
-        Err(Error::NotFound(format!("command {id}")))
+        match id {
+            "nc.jslt.setup" => {
+                setup::guide()?;
+                Ok(None)
+            }
+            "nc.jslt.check" => {
+                setup::check(true);
+                Ok(None)
+            }
+            _ => Err(Error::NotFound(format!("command {id}"))),
+        }
     }
 }
 

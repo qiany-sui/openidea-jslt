@@ -1,7 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { execFileSync, spawnSync } = require('node:child_process');
-const { mkdtempSync, existsSync, readFileSync, rmSync } = require('node:fs');
+const { mkdtempSync, realpathSync, existsSync, readFileSync, rmSync } = require('node:fs');
 const { tmpdir } = require('node:os');
 const { createHash } = require('node:crypto');
 const path = require('node:path');
@@ -30,7 +30,14 @@ test('release installs offline outside OpenIDEA and runs the complete LSP suite'
   const installed = path.join(modules, 'openidea-jslt-language-server');
   const cli = path.join(installed, 'bin/openidea-jslt-lsp.cjs');
   assert.equal(execFileSync(process.execPath, [cli, '--version'], { encoding: 'utf8' }).trim(), version);
+  assert.equal(execFileSync(process.execPath, [cli, '--path'], { encoding: 'utf8' }).trim(), realpathSync(cli));
   assert.match(execFileSync(process.execPath, [cli, '--help'], { encoding: 'utf8' }), /--stdio/);
+  for (const arg of ['--version', '--stdio']) {
+    const unsupportedNode = spawnSync(process.execPath, ['-e', "Object.defineProperty(process.versions, 'node', {value: '18.20.8'}); require(process.argv[1]);", cli, arg], { encoding: 'utf8' });
+    assert.equal(unsupportedNode.status, 1, `${arg} must reject unsupported Node versions`);
+    assert.equal(unsupportedNode.stdout, '');
+    assert.match(unsupportedNode.stderr, /Node.js 20 or newer/);
+  }
   const invalid = spawnSync(process.execPath, [cli, '--unknown'], { encoding: 'utf8' });
   assert.equal(invalid.status, 2);
   assert.equal(invalid.stdout, '');

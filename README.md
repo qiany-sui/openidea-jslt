@@ -14,17 +14,18 @@ hover documentation, formatting and go to definition. Plugin ID: `nc.jslt`.
 
 ## Install
 
-Download both matching files from [v0.1.3](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.3) (or build them locally):
-`nc.jslt-0.1.3.oiplugin` and `openidea-jslt-language-server-0.1.3.tgz`.
-JSLT 0.1.3 is now listed in the OpenIDEA marketplace ([registration](https://github.com/l0ng-ai/openidea-plugins/pull/143)).
-The steps below install a local package; alternatively, install JSLT from **Settings → Plugins → Available**.
-The language server still requires step 1 and is distributed as a release archive, not an npm registry package.
+Download both matching files from [v0.1.4](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.4) (or build them locally):
+`nc.jslt-0.1.4.oiplugin` and `openidea-jslt-language-server-0.1.4.tgz`.
+The marketplace plugin **does not install the language server**. Install the server first,
+then install/update JSLT in **Settings → Plugins → Available** (or use the local package below).
+Release archives are provided on GitHub; this is not an npm registry package.
 
 1. Install the downloaded language server archive:
 
    ```sh
-   npm install --global --offline --ignore-scripts ./openidea-jslt-language-server-0.1.3.tgz
+   npm install --global --offline --ignore-scripts ./openidea-jslt-language-server-0.1.4.tgz
    openidea-jslt-lsp --version
+   openidea-jslt-lsp --path
    ```
 
    The archive includes its runtime dependencies. It needs no registry access,
@@ -36,13 +37,12 @@ The language server still requires step 1 and is distributed as a release archiv
    select the `.oiplugin` file. Local development packages are unsigned. Quit and
    restart OpenIDEA after installation. On macOS 0.1.43 the file chooser can retain
    the plugin-package filter and disable script files in the next step; restarting clears it.
-3. Allow `process:openidea-jslt-lsp`. If discovery fails, select the installed
-   executable shown by `command -v openidea-jslt-lsp` (macOS/Linux) or
-   `where.exe openidea-jslt-lsp` (Windows). The npm prefix's `bin` directory
-   must be on PATH on macOS/Linux; on Windows it is the prefix itself.
-   For a custom prefix outside PATH, select `<prefix>/bin/openidea-jslt-lsp` directly.
-   The actual npm entry `<prefix>/lib/node_modules/openidea-jslt-language-server/bin/openidea-jslt-lsp.cjs`
-   was also verified in the macOS executable picker.
+3. In **Settings → Plugins → Installed → JSLT**, allow `process:openidea-jslt-lsp`.
+   If no executable is bound, choose **Select executable** and select the **actual script**
+   printed by `openidea-jslt-lsp --path`, then approve it in OpenIDEA's normal dialog.
+   Enabling the permission alone is not sufficient when the server was missing during installation.
+   If the shell cannot find the command, add the npm prefix's `bin` directory to PATH on macOS/Linux
+   (the prefix itself on Windows). For a custom prefix, run `<prefix>/bin/openidea-jslt-lsp --path`.
 4. Close and reopen the project, then open `examples/demo.jslt`.
    Existing projects can keep an earlier language-server configuration;
    restarting only the server does not refresh that configuration.
@@ -51,6 +51,18 @@ The server is an independent command. It does not inspect OpenIDEA's application
 identifier or write into an application's data directory. Official and custom
 builds use the same package. The two installation steps follow OpenIDEA's
 [external language-server model](https://openidea.sh/zh/plugins/guides/language-features).
+
+## When no language server is available
+
+Version 0.1.4 checks the approved server when activated. Missing permission, a missing or failing
+executable, and a different server version show a notification with **Installation and permissions**
+and **Check again** buttons. The same warning is not repeated on idle reload; the command palette's
+**JSLT: Check language server** command always checks again. A successful executable check does not
+prove that an already-open project's LSP configuration has refreshed: close and reopen that project.
+
+If you installed the marketplace plugin first, complete steps 1, 3 and 4 above. Upgrade **both** packages
+to 0.1.4; an older server has no `--path` command. Permission approval stays under your control.
+The plugin stores only notification state in its private data directory and adds no new permissions.
 
 ## Features and limits
 
@@ -88,7 +100,7 @@ No OpenIDEA grants or application settings are edited by the package.
 Install matching server/plugin versions, then reopen the project. OpenIDEA pins
 approved executable paths and content hashes, so a changed server or Node version
 may require normal permission confirmation or selecting the new executable.
-The local 0.1.2 build used `process:node`; 0.1.3 uses the separate
+The local 0.1.2 build used `process:node`; 0.1.3 and newer use the separate
 `process:openidea-jslt-lsp` permission. Do not copy or edit permission records.
 
 To roll back, reinstall both files from the earlier release. To remove the server:
@@ -130,4 +142,4 @@ Apache-2.0. The language server adapts
 [Anton Kraev's jslt-language-server](https://github.com/amkraev697642/jslt-language-server).
 All dependency licenses and source/version attribution are retained in [NOTICE](NOTICE)
 and `licenses/`. The public project continues the local 0.1.2 implementation;
-0.1.3 changes distribution and installation, not the JSLT language semantics.
+0.1.3 introduced portable distribution; 0.1.4 improves setup checks and guidance, not the JSLT language semantics.
