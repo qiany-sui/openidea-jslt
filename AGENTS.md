@@ -1,6 +1,6 @@
 # 协作约定
 
-本项目是独立 OpenIDEA 插件，范围仅为 JSLT 编辑支持。公开项目名 openidea-jslt，插件 ID nc.jslt，当前公开候选版本 0.1.3。
+本项目是独立 OpenIDEA 插件，范围仅为 JSLT 编辑支持。公开项目名 openidea-jslt，插件 ID nc.jslt，当前公开版本 0.1.3。
 
 公开源码仓库：https://github.com/qiany-sui/openidea-jslt；默认分支 main，Verify 工作流负责构建、测试及官方插件检查。
 

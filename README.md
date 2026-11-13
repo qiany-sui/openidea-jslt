@@ -14,9 +14,9 @@ hover documentation, formatting and go to definition. Plugin ID: `nc.jslt`.
 
 ## Install
 
-Download both matching files from a project release (or build them locally):
+Download both matching files from [v0.1.3](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.3) (or build them locally):
 `nc.jslt-0.1.3.oiplugin` and `openidea-jslt-language-server-0.1.3.tgz`.
-This project has not been published to the marketplace or npm registry yet.
+Marketplace registration is pending. The language server is distributed as a release archive, not an npm registry package.
 
 1. Install the downloaded language server archive:
 

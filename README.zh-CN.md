@@ -8,9 +8,9 @@
 
 需要支持 Plugin API 1.5 的 OpenIDEA，以及 Node.js 20+、npm。
 已在 macOS ARM64 的官方 OpenIDEA 0.1.43 完成桌面实测；Linux、Windows 尚未完成桌面集成验证。
-本项目目前尚未发布到插件市场或 npm registry。
+插件市场登记待审核；语言服务通过 Release 附件分发，不依赖 npm registry 发布。
 
-从项目发行包取得版本匹配的两个文件，或者按下文自行构建：
+从 [v0.1.3 Release](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.3) 取得版本匹配的两个文件，或者按下文自行构建：
 
 1. 在下载目录安装语言服务：
 
