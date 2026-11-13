@@ -1,6 +1,6 @@
 # 协作约定
 
-本项目是独立 OpenIDEA 插件，范围仅为 JSLT 编辑支持。公开项目名 openidea-jslt，插件 ID nc.jslt，当前开发版本 0.1.4，已公开版本 0.1.3。
+本项目是独立 OpenIDEA 插件，范围仅为 JSLT 编辑支持。公开项目名 openidea-jslt，插件 ID nc.jslt，当前开发及公开发行版本 0.1.4；市场更新见下方登记记录。
 
 公开源码仓库：https://github.com/qiany-sui/openidea-jslt；默认分支 main，Verify 工作流负责构建、测试及官方插件检查。
 
@@ -44,5 +44,17 @@
 - [x] `src/setup.rs` 负责限时探测、配置通知和提示去重；`src/lib.rs` 仅接入生命周期/命令。通过宿主批准的命令调用 `--version`，不执行用户 JSLT。
 - [x] 私有数据目录仅保存提示状态；缺失、拒绝、超时、异常输出或版本不匹配均提示配置，已就绪时清除提示。手动检查始终显示结果。
 - [x] CLI 新增 `--path` 输出实际脚本路径；同步版本、清单和中英文安装说明，说明升级后重新授权及重开项目。
-- [ ] 运行 Rust、源码 LSP、离线安装包测试、格式检查和官方检查器；在临时 fixture 验证新提示和恢复路径。
-- [ ] 复用发布者密钥，CI 通过后签名发布 v0.1.4，公开下载核验摘要，提交市场版本更新 PR。
+- [x] 运行 Rust、源码 LSP、离线安装包测试、格式检查和官方检查器；在临时 fixture 验证新提示和恢复路径。
+- [x] 复用发布者密钥，CI 通过后签名发布 v0.1.4，公开下载核验摘要，提交市场版本更新 PR。
+
+## 0.1.4 验证与发布记录（2026-11-13）
+
+- 正式 Release：https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.4；源码/tag 指向 `28e787ed343417b121e61689a64290945c20f07b`。
+- 对应源码 CI：https://github.com/qiany-sui/openidea-jslt/actions/runs/43402522964，已通过。
+- Rust 11/11（含配置检查 6 项）、源码 LSP 15/15、离线分发 1/1（内部已安装 LSP 15/15）通过。覆盖 CLI `--path`、Node 20 版本门槛和含中文/空格的安装路径；Rust 格式与 diff 检查通过。
+- macOS ARM64 官方 OpenIDEA 0.1.43 中验证：未授权时自动显示配置通知，通过正常 UI 选择并批准临时语言服务后，“重新检查”报告已安装且获准运行，状态栏显示 `openidea-jslt`。
+- 同一临时 fixture 的高亮、补全、快速文档、格式化、无效函数诊断及修正后清除、本地和跨文件定义跳转全部通过。运行统计为 0 错误、0 崩溃；测试插件及临时 npm 服务已卸载，官方测试应用已退出。
+- Nc 的定制版已安装插件和语言服务仍为 0.1.3，本次未替换。Windows/Linux GUI 尚未验证。
+- 复用 `nc` 发布者密钥；官方 v0.1.43 检查器与公钥签名验证通过。三个公开下载附件与本地最终发行文件逐字节一致，文件保存在忽略目录 `dist/releases/0.1.4/`。
+- 签名插件 SHA-256：`fcc0b02b302cf717134c0253cf71349c8d1a4f3948563bb23942fd25db3710f5`；语言服务 tgz SHA-256：`f46c49e768dfc7d4b0d0ac6344a2f23236fcd46f5d667b7d95a344e7690a5f0a`。
+- 市场更新 PR：https://github.com/l0ng-ai/openidea-plugins/pull/145；保留 0.1.3 条目。登记 CI：https://github.com/l0ng-ai/openidea-plugins/actions/runs/43404174985；仍需维护者审核合并，不把 GitHub Release 发布等同于市场索引已更新。

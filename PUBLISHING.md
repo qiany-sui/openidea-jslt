@@ -1,8 +1,8 @@
 # 发布到 OpenIDEA 插件市场
 
 源码仓库：[qiany-sui/openidea-jslt](https://github.com/qiany-sui/openidea-jslt)。
-0.1.4 正在准备发布，包含语言服务配置检查、安装与授权入口、CLI `--path`。
-0.1.3 已通过[市场登记 PR #143](https://github.com/l0ng-ai/openidea-plugins/pull/143) 上架；0.1.4 需另行登记。
+0.1.4 已[正式发布](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.4)，包含语言服务配置检查、安装与授权入口、CLI `--path`。
+0.1.3 已通过[市场登记 PR #143](https://github.com/l0ng-ai/openidea-plugins/pull/143) 上架；0.1.4 的[市场更新 PR #145](https://github.com/l0ng-ai/openidea-plugins/pull/145) 已提交，等待维护者合并。
 语言服务继续通过 Release 分发并单独安装，未注册 npm 包。验证结果见 [AGENTS.md](AGENTS.md)。
 构建与测试通过 [GitHub Actions](https://github.com/qiany-sui/openidea-jslt/actions/workflows/ci.yml) 持续检查，以目标提交的运行结果为准。
 每次发布都先确认目标提交的 CI 通过，再用仓库外保存的发布者密钥签名；已有密钥应复用，不重新生成。
