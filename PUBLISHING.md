@@ -2,7 +2,7 @@
 
 源码仓库：[qiany-sui/openidea-jslt](https://github.com/qiany-sui/openidea-jslt)。
 当前公开版本为 [0.1.3](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.3)。
-市场登记需维护者审核；语言服务通过 Release 分发，未注册 npm 包。
+[市场登记 PR #143](https://github.com/l0ng-ai/openidea-plugins/pull/143) 已提交，待维护者审核合并；语言服务通过 Release 分发，未注册 npm 包。
 本地代码审查、自动测试和 macOS 官方版桌面验证已通过，记录见 [AGENTS.md](AGENTS.md)。
 构建与测试通过 [GitHub Actions](https://github.com/qiany-sui/openidea-jslt/actions/workflows/ci.yml) 持续检查，以目标提交的运行结果为准。
 每次发布都先确认目标提交的 CI 通过，再用仓库外保存的发布者密钥签名；已有密钥应复用，不重新生成。

@@ -24,3 +24,12 @@
 - Rust 高亮 5/5，源码 LSP 15/15，离线分发测试 1/1（内部再运行已安装 LSP 15/15）通过。
 - macOS 从插件包安装后，选择器可能沿用文件类型筛选；重启宿主后可选脚本。安装说明已记录。
 - 测试后从官方版正常卸载，列表恢复“已安装 0”；定制版 0.1.2 未替换。Linux/Windows GUI 尚未执行；CI 结果以 GitHub Actions 中对应提交的记录为准。
+
+## 0.1.3 发布记录（2026-11-13）
+
+- 正式 Release：https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.3；源码/tag 指向 `4dba1483eb7059b4f509ba26a1505c982f1f1435`。
+- 对应源码 CI：https://github.com/qiany-sui/openidea-jslt/actions/runs/43390400108，已通过。
+- 插件由 `nc` 发布者签名，官方 v0.1.43 检查器和公钥签名验证通过；公开下载的三个附件与本地发行文件逐字节一致。
+- 签名插件 SHA-256：`d830e6fc279f02c0d1d7debd45225b8d9521a19b46632faf3ca98b37d4e241a0`；最终文件保存在忽略目录 `dist/releases/0.1.3/`。
+- 市场登记 PR：https://github.com/l0ng-ai/openidea-plugins/pull/143；已提交，尚待维护者审核合并，不把 Release 发布当作市场已上架。
+- 后续发布复用 `nc` 的现有签名密钥；私钥始终留在仓库外，不上传 CI、Release 或登记仓库。
