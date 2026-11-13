@@ -31,5 +31,6 @@
 - 对应源码 CI：https://github.com/qiany-sui/openidea-jslt/actions/runs/43390400108，已通过。
 - 插件由 `nc` 发布者签名，官方 v0.1.43 检查器和公钥签名验证通过；公开下载的三个附件与本地发行文件逐字节一致。
 - 签名插件 SHA-256：`d830e6fc279f02c0d1d7debd45225b8d9521a19b46632faf3ca98b37d4e241a0`；最终文件保存在忽略目录 `dist/releases/0.1.3/`。
-- 市场登记 PR：https://github.com/l0ng-ai/openidea-plugins/pull/143；已提交，尚待维护者审核合并，不把 Release 发布当作市场已上架。
+- 市场登记 PR：https://github.com/l0ng-ai/openidea-plugins/pull/143；2026-11-13 16:40（北京时间）已合并，合并提交 `bef84cd31a54b34dcce38c29760b7290354baf79`。
+- 合并后登记 CI：https://github.com/l0ng-ai/openidea-plugins/actions/runs/43395042955，已通过并发布索引。当天已直接核对社区 `index.json` 及官方 v0.1.43 的 `plugins-index.json`，两者均包含 `nc.jslt` 0.1.3；此项为索引核验，未重复执行市场 GUI 安装。
 - 后续发布复用 `nc` 的现有签名密钥；私钥始终留在仓库外，不上传 CI、Release 或登记仓库。

@@ -8,7 +8,9 @@
 
 需要支持 Plugin API 1.5 的 OpenIDEA，以及 Node.js 20+、npm。
 已在 macOS ARM64 的官方 OpenIDEA 0.1.43 完成桌面实测；Linux、Windows 尚未完成桌面集成验证。
-插件市场登记待审核；语言服务通过 Release 附件分发，不依赖 npm registry 发布。
+JSLT 0.1.3 已进入 OpenIDEA 插件市场，[登记 PR #143](https://github.com/l0ng-ai/openidea-plugins/pull/143) 已合并。
+以下为本地包安装步骤；也可在 **设置 → 插件 → 可用** 中搜索 JSLT 安装插件。
+语言服务仍需先按第 1 步安装，通过 Release 附件分发，不依赖 npm registry 发布。
 
 从 [v0.1.3 Release](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.3) 取得版本匹配的两个文件，或者按下文自行构建：
 
