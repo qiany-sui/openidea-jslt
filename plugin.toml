@@ -1,0 +1,13 @@
+id = "nc.jslt"
+name = "JSLT"
+version = "0.1.3"
+description = "JSLT 文件高亮、补全、语法检查、定义跳转、悬停说明与缩进格式化。独立 Node.js 语言服务。"
+authors = ["Nc"]
+license = "Apache-2.0"
+categories = ["languages"]
+engines.openidea = "^1.5"
+wasm = "dist/plugin.wasm"
+activation = ["on-language:jslt"]
+
+[[contributes.languages]]
+path = "languages/jslt.toml"

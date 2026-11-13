@@ -1,0 +1,12 @@
+id = "jslt"
+name = "JSLT"
+extensions = ["jslt"]
+line-comment = "//"
+indent = { tab-size = 2, insert-spaces = true }
+
+[[language-servers]]
+name = "openidea-jslt"
+command = "openidea-jslt-lsp"
+args = ["--stdio"]
+root-markers = ["pom.xml", ".git"]
+install-hint = "Install Node.js 20+, then run npm install --global ./openidea-jslt-language-server-0.1.3.tgz from the downloaded release. Allow process:openidea-jslt-lsp in plugin permissions."

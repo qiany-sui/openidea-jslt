@@ -1,0 +1,8 @@
+// JSLT 编辑支持演示：补全 string、悬停函数、格式化此文件。
+let customer = .customer
+{
+  "姓名": string($customer.name),
+  "金额": round(.amount),
+  "有效": if (.enabled) true else false,
+  "明细": [for (.items) {"名称": .name, "数量": .quantity}]
+}

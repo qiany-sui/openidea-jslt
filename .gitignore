@@ -1,0 +1,9 @@
+/target/
+/dist/
+/server/node_modules/
+*.tgz
+*.oiplugin
+*.key
+*.pem
+.DS_Store
+.superpowers/
