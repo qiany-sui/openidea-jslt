@@ -1,6 +1,6 @@
 id = "nc.jslt"
 name = "JSLT"
-version = "0.1.4"
+version = "0.1.5"
 description = "JSLT 文件高亮、补全、语法检查、定义跳转、悬停说明与缩进格式化。需另行安装 Node.js 20+ 语言服务；首次使用提供安装与授权引导。"
 authors = ["Nc"]
 license = "Apache-2.0"

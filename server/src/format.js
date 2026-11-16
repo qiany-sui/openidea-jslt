@@ -33,5 +33,5 @@ export function formatJslt(text, indent) {
     depth = Math.max(depth + net, 0);
     return prefix + body + eol;
   }).join("");
-  return quoted || out.endsWith("\n") ? out : out + (text.includes("\r\n") ? "\r\n" : "\n");
+  return out;
 }

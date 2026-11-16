@@ -22,13 +22,13 @@ jobs:
       - run: cargo test --locked
       - run: npm run build
       - run: npm test
-      - name: Check with OpenIDEA 0.1.43
+      - name: Check with OpenIDEA 0.1.45
         run: |
-          curl --fail --location --output "$RUNNER_TEMP/openidea-plugin.gz" https://github.com/l0ng-ai/openidea/releases/download/v0.1.43/openidea-plugin-linux-x86_64.gz
-          echo 'f6d00115444670c8e3e8ef61c6aacabfa3924fda382a78b633fac1064cae1caa  '"$RUNNER_TEMP/openidea-plugin.gz" | sha256sum --check
+          curl --fail --location --output "$RUNNER_TEMP/openidea-plugin.gz" https://github.com/l0ng-ai/openidea/releases/download/v0.1.45/openidea-plugin-linux-x86_64.gz
+          echo '00ad9c6062f60b36efbacf21eefd68a00135f2d4ebb0eded360c10670dc8df8c  '"$RUNNER_TEMP/openidea-plugin.gz" | sha256sum --check
           gzip --decompress "$RUNNER_TEMP/openidea-plugin.gz"
           chmod +x "$RUNNER_TEMP/openidea-plugin"
-          "$RUNNER_TEMP/openidea-plugin" check dist/nc.jslt-0.1.4.oiplugin
+          "$RUNNER_TEMP/openidea-plugin" check dist/nc.jslt-0.1.5.oiplugin
       - uses: actions/upload-artifact@v4
         with:
           name: unsigned-release

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -93,16 +93,69 @@ test("completes variables and builtins and returns builtin hover documentation",
   assert.match(hover.contents.value, /string\(/);
 });
 
+test("formatting uses the language defaults to match the IDEA sample layout", async t => {
+  const config = fileURLToPath(new URL("../../languages/jslt.toml", import.meta.url));
+  const defaults = JSON.parse(execFileSync("python3", ["-c",
+    "import json,sys,tomllib; print(json.dumps(tomllib.load(open(sys.argv[1], 'rb'))['indent']))", config], { encoding: "utf8" }));
+  const c = await client(t), uri = "file:///tmp/openidea-jslt-idea-layout.jslt";
+  const expected = [
+    'let payload = from-json(.headers.payload)',
+    '',
+    'let data = {',
+    '    "name" : .headers.name, // 名称',
+    '    "count" : $payload.count, //数量',
+    '    "value" : $payload.value//保留注释间距',
+    '}',
+    '',
+    '{',
+    '    "properties" : {',
+    '        "data" : $data,',
+    '        "state" : $payload.state',
+    '    }',
+    '}',
+    '',
+  ].join("\n");
+  c.open(uri, expected.replace(/^ +/gm, ""));
+  const params = { textDocument: { uri }, options: { tabSize: defaults["tab-size"], insertSpaces: defaults["insert-spaces"] } };
+  const edits = await c.request("textDocument/formatting", params);
+  assert.equal(edits[0]?.newText, expected);
+  c.change(uri, expected);
+  assert.deepEqual(await c.request("textDocument/formatting", params), []);
+});
+
+test("formatting preserves absent, LF and CRLF final newlines", async t => {
+  const c = await client(t);
+  const cases = [
+    ["", ""],
+    ["   .", "."],
+    ["   .\n", ".\n"],
+    ["   .\r\n", ".\r\n"],
+    ['{\r\n"value" : 1\r\n}', '{\r\n    "value" : 1\r\n}'],
+    ['{\n"value" : 1\n}\n\n', '{\n    "value" : 1\n}\n\n'],
+  ];
+  for (const [i, [input, expected]] of cases.entries()) {
+    const uri = `file:///tmp/openidea-jslt-line-ending-${i}.jslt`;
+    c.open(uri, input);
+    const params = { textDocument: { uri }, options: { tabSize: 4, insertSpaces: true } };
+    const edits = await c.request("textDocument/formatting", params);
+    assert.equal(edits[0]?.newText ?? input, expected);
+    c.change(uri, expected);
+    assert.deepEqual(await c.request("textDocument/formatting", params), []);
+  }
+});
+
 test("formatting respects indentation options, keeps strings and comments, and is idempotent", async t => {
   const c = await client(t), uri = "file:///tmp/openidea-jslt-format.jslt";
   c.open(uri, '{\n"value": {\n"text": "} // 中文🦊" // retain\n}\n}');
   const params = { textDocument: { uri }, options: { tabSize: 4, insertSpaces: true } };
   const edits = await c.request("textDocument/formatting", params);
-  assert.equal(edits[0].newText, '{\n    "value": {\n        "text": "} // 中文🦊" // retain\n    }\n}\n');
+  assert.equal(edits[0].newText, '{\n    "value": {\n        "text": "} // 中文🦊" // retain\n    }\n}');
   c.change(uri, edits[0].newText);
   assert.deepEqual(await c.request("textDocument/formatting", params), []);
   const tabs = await c.request("textDocument/formatting", { ...params, options: { tabSize: 4, insertSpaces: false } });
   assert.ok(tabs[0].newText.includes('\n\t\t"text"'));
+  const spaces = await c.request("textDocument/formatting", { ...params, options: { tabSize: 2, insertSpaces: true } });
+  assert.equal(spaces[0].newText, '{\n  "value": {\n    "text": "} // 中文🦊" // retain\n  }\n}');
 });
 
 test("imports use unsaved text and closing an imported buffer restores disk diagnostics", async t => {

@@ -14,8 +14,8 @@ hover documentation, formatting and go to definition. Plugin ID: `nc.jslt`.
 
 ## Install
 
-Download both matching files from [v0.1.4](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.4) (or build them locally):
-`nc.jslt-0.1.4.oiplugin` and `openidea-jslt-language-server-0.1.4.tgz`.
+Download both matching files from [v0.1.5](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.5) (or build them locally):
+`nc.jslt-0.1.5.oiplugin` and `openidea-jslt-language-server-0.1.5.tgz`.
 The marketplace plugin **does not install the language server**. Install the server first,
 then install/update JSLT in **Settings → Plugins → Available** (or use the local package below).
 Release archives are provided on GitHub; this is not an npm registry package.
@@ -23,7 +23,7 @@ Release archives are provided on GitHub; this is not an npm registry package.
 1. Install the downloaded language server archive:
 
    ```sh
-   npm install --global --offline --ignore-scripts ./openidea-jslt-language-server-0.1.4.tgz
+   npm install --global --offline --ignore-scripts ./openidea-jslt-language-server-0.1.5.tgz
    openidea-jslt-lsp --version
    openidea-jslt-lsp --path
    ```
@@ -54,14 +54,14 @@ builds use the same package. The two installation steps follow OpenIDEA's
 
 ## When no language server is available
 
-Version 0.1.4 checks the approved server when activated. Missing permission, a missing or failing
+Since 0.1.4, the plugin checks the approved server when activated. Missing permission, a missing or failing
 executable, and a different server version show a notification with **Installation and permissions**
 and **Check again** buttons. The same warning is not repeated on idle reload; the command palette's
 **JSLT: Check language server** command always checks again. A successful executable check does not
 prove that an already-open project's LSP configuration has refreshed: close and reopen that project.
 
 If you installed the marketplace plugin first, complete steps 1, 3 and 4 above. Upgrade **both** packages
-to 0.1.4; an older server has no `--path` command. Permission approval stays under your control.
+to 0.1.5; servers older than 0.1.4 have no `--path` command. Permission approval stays under your control.
 The plugin stores only notification state in its private data directory and adds no new permissions.
 
 ## Features and limits
@@ -71,7 +71,7 @@ The plugin stores only notification state in its private data directory and adds
 - Report syntax, function, argument and import errors; support definition-only modules.
 - Go to local functions, variables, parameters, imported functions, aliases and import paths.
   Definitions respect JSLT scope and unsaved imported buffers, with UTF-16 positions.
-- Format indentation without changing strings or comments. Single-line expressions are not expanded.
+- Format indentation using four spaces by default, respecting explicit editor overrides and preserving strings, comments and final newlines (including their absence). Single-line expressions are not expanded.
 
 Use the editor's completion, hover, format and **Declaration or Usages** commands.
 Builtins, injected variables and JSON fields have no local definition target.

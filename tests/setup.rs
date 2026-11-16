@@ -70,11 +70,11 @@ fn healthy_service_is_silent_and_manual_check_reports_readiness() {
 #[test]
 fn failed_or_wrong_service_never_reports_ready() {
     for (status, stdout) in [
-        (Some(1), "0.1.4"),
+        (Some(1), env!("CARGO_PKG_VERSION")),
         (None, ""),
         (Some(0), ""),
         (Some(0), "another tool"),
-        (Some(0), "0.1.3"),
+        (Some(0), "0.1.4"),
     ] {
         let host = MockHost::install().with_capabilities(&["process:openidea-jslt-lsp"]);
         host.on_process("openidea-jslt-lsp", move |_, _| {

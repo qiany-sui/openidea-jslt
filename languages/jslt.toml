@@ -2,11 +2,11 @@ id = "jslt"
 name = "JSLT"
 extensions = ["jslt"]
 line-comment = "//"
-indent = { tab-size = 2, insert-spaces = true }
+indent = { tab-size = 4, insert-spaces = true }
 
 [[language-servers]]
 name = "openidea-jslt"
 command = "openidea-jslt-lsp"
 args = ["--stdio"]
 root-markers = ["pom.xml", ".git"]
-install-hint = "Install Node.js 20+ and openidea-jslt-language-server-0.1.4.tgz from the v0.1.4 GitHub Release. Run openidea-jslt-lsp --path; select that script and allow process:openidea-jslt-lsp in Settings > Plugins > Installed > JSLT, then reopen the project. Run JSLT: Check language server for help."
+install-hint = "Install Node.js 20+ and openidea-jslt-language-server-0.1.5.tgz from the v0.1.5 GitHub Release. Run openidea-jslt-lsp --path; select that script and allow process:openidea-jslt-lsp in Settings > Plugins > Installed > JSLT, then reopen the project. Run JSLT: Check language server for help."
