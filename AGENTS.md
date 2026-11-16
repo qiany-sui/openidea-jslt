@@ -1,6 +1,6 @@
 # 协作约定
 
-本项目是独立 OpenIDEA 插件，范围仅为 JSLT 编辑支持。公开项目名 openidea-jslt，插件 ID nc.jslt，当前开发版本 0.1.5，公开发行版本暂为 0.1.4；发布进度见下方记录。
+本项目是独立 OpenIDEA 插件，范围仅为 JSLT 编辑支持。公开项目名 openidea-jslt，插件 ID nc.jslt，当前开发及公开发行版本 0.1.5；市场更新进度见下方记录。
 
 公开源码仓库：https://github.com/qiany-sui/openidea-jslt；默认分支 main，Verify 工作流负责构建、测试及官方插件检查。
 
@@ -67,6 +67,9 @@
 - Rust 11/11、源码 LSP 17/17、离线分发 1/1（内部已安装 LSP 17/17）、构建、Rust 格式及宿主插件包检查通过。包内语言配置确认是 4 空格。
 - 经 Nc 确认，已在本机定制版 OpenIDEA 0.1.45 安装并启用未签名测试插件，将独立服务从 0.1.3 更新为本地测试构建，并通过正常 UI 重新授权服务脚本。两者版本号仍为 0.1.4；旧插件、旧服务和状态已备份。
 - 安装文件与测试包逐字节一致；已安装 LSP 17/17、IDEA 样例只读测试 1/1 通过。随后 Nc 人工验证格式化通过，明确要求将插件和语言服务同步发布为 0.1.5。
-- 上述本机测试构建仍标记为 0.1.4；正式 0.1.5 将单独构建、签名和发布，保留正式 0.1.4 产物。测试插件 SHA-256：`2264f3f35ad8d352fbd639898d359aa99781a4c80be38a6a269155a92fb1bc5f`；测试语言服务 tgz：`0bc1bf2a9be84c869e299c4e491c724c9c7b5deaafbfd15ce9667dd0b50ee263`。
+- 上述本机测试构建仍标记为 0.1.4；正式 0.1.5 已单独构建、签名和发布，保留正式 0.1.4 产物。本次发布未替换本机安装。测试插件 SHA-256：`2264f3f35ad8d352fbd639898d359aa99781a4c80be38a6a269155a92fb1bc5f`；测试语言服务 tgz：`0bc1bf2a9be84c869e299c4e491c724c9c7b5deaafbfd15ce9667dd0b50ee263`。
 
-- 0.1.5 发布步骤：同步版本及安装说明 → Rust/LSP/离线分发与官方包检查 → 源码提交及 CI → 复用 nc 密钥签名、公开 Release 和下载摘要核验 → 市场版本登记 PR 与结果记录。
+- 正式 Release：https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.5；源码/tag 为 `35e45f4f0907f9da5340764976750eaf86e71c53`。源码 CI：https://github.com/qiany-sui/openidea-jslt/actions/runs/43822204316，已通过。
+- 正式 0.1.5 重新运行 Rust 11/11、源码 LSP 17/17、离线分发 1/1（含已安装 LSP 17/17）、格式检查与构建；CI 使用固定摘要的官方 OpenIDEA 0.1.45 检查器，全部通过。复用现有 nc 密钥签名，公钥与市场登记一致，签名验证通过。
+- 三个公开下载附件与本地最终文件逐字节一致；插件 SHA-256：`86dc19ae78cbd1da16b32dc1a8a7615b1bf16eb3b75732e608e516ce97a5c895`；语言服务 tgz：`2b0aa33010e84c7edd4f76e9979260475a81829b630d3dc9d8d6329d514667cb`。文件保存在忽略目录 `dist/releases/0.1.5/`。
+- 市场更新 PR：https://github.com/l0ng-ai/openidea-plugins/pull/176；登记提交 `be92257e0c2704576d03fa58839be76803a49ea9`，保留 0.1.3/0.1.4 条目。登记 CI：https://github.com/l0ng-ai/openidea-plugins/actions/runs/43822910481，已排队等待执行，PR 等待维护者审核合并；不能把 Release 发布等同于市场索引已更新。
