@@ -1,7 +1,8 @@
 # 发布到 OpenIDEA 插件市场
 
 源码仓库：[qiany-sui/openidea-jslt](https://github.com/qiany-sui/openidea-jslt)。
-0.1.6 正在准备发布，修复已有调用括号前接受函数补全时重复插入括号；插件和语言服务同步升级。
+[0.1.6 正式 Release](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.6) 已发布，修复已有调用括号前接受函数补全时重复插入括号；插件和语言服务同步升级。
+[0.1.6 市场更新 PR #180](https://github.com/l0ng-ai/openidea-plugins/pull/180) 已提交，登记 CI 最近核对仍在排队，待维护者合并和索引同步；尚未确认市场上架。
 [0.1.5 市场更新 PR #176](https://github.com/l0ng-ai/openidea-plugins/pull/176) 已于 2026-11-16 合并；发布 CI 通过，社区及官方市场索引已同步到 0.1.5，确认上架。
 0.1.4 的[市场更新 PR #145](https://github.com/l0ng-ai/openidea-plugins/pull/145) 已合并上架。
 语言服务继续通过 Release 分发并单独安装，未注册 npm 包。验证结果见 [AGENTS.md](AGENTS.md)。
