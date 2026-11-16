@@ -67,12 +67,14 @@ connection.onCompletion((p) => {
   const r = candidates(before, text, importedFiles(text, importReader(doc.uri)));
   if (!r) return [];
   const range = Range.create({ line: p.position.line, character: r.from }, p.position);
+  // 已有调用括号时只补函数名，保留用户输入的括号、空白和参数。
+  const hasCallParen = /^\s*\(/.test(text.slice(doc.offsetAt(p.position)));
   return r.options.map((o) => ({
     label: o.label,
     kind: KINDS[o.type],
     detail: o.detail ? o.label + o.detail : undefined,
     documentation: o.info ? { kind: MarkupKind.PlainText, value: o.info } : undefined,
-    textEdit: TextEdit.replace(range, o.apply || o.label),
+    textEdit: TextEdit.replace(range, o.type === "function" && hasCallParen ? o.label : (o.apply || o.label)),
   }));
 });
 

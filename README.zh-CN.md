@@ -11,12 +11,12 @@
 **市场只安装插件，不会同时安装语言服务。** 请先完成下面第 1 步，再从市场安装/更新 JSLT，或从本地插件包安装。
 语言服务通过 GitHub Release 附件分发，未注册 npm 包。
 
-从 [v0.1.5 Release](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.5) 取得版本匹配的两个文件，或者按下文自行构建：
+从 [v0.1.6 Release](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.6) 取得版本匹配的两个文件，或者按下文自行构建：
 
 1. 在下载目录安装语言服务：
 
    ```sh
-   npm install --global --offline --ignore-scripts ./openidea-jslt-language-server-0.1.5.tgz
+   npm install --global --offline --ignore-scripts ./openidea-jslt-language-server-0.1.6.tgz
    openidea-jslt-lsp --version
    openidea-jslt-lsp --path
    ```
@@ -25,7 +25,7 @@
    如果 npm 全局目录不可写，使用用户可写的 npm prefix 或 Node 版本管理器，不用 sudo 绕过。
 
 2. 在 OpenIDEA **设置 → 插件 → 管理插件 → 从插件包文件安装** 中选择
-   `nc.jslt-0.1.5.oiplugin`。本地构建的包尚未签名。安装后退出并重新启动 OpenIDEA。
+   `nc.jslt-0.1.6.oiplugin`。本地构建的包尚未签名。安装后退出并重新启动 OpenIDEA。
    macOS 0.1.43 的文件选择器可能沿用插件包筛选，导致下一步脚本文件变灰；重启可恢复。
 3. 在 **设置 → 插件 → 已安装 → JSLT** 中允许 `process:openidea-jslt-lsp`。
    若未绑定可执行文件，点 **选择可执行文件**，选择 `openidea-jslt-lsp --path` 输出的实际脚本，
@@ -44,12 +44,12 @@
 命令面板中的 **JSLT: Check language server / 检查语言服务** 可随时再次检查。
 可执行文件检查通过不等于已打开项目的 LSP 配置已刷新，必要时仍须关闭后重开项目。
 
-若先装了市场插件，请补做上面的第 1、3、4 步。插件与服务都升级到 0.1.5；0.1.4 之前的服务没有 `--path` 命令。
+若先装了市场插件，请补做上面的第 1、3、4 步。插件与服务都升级到 0.1.6；0.1.4 之前的服务没有 `--path` 命令。
 插件只在自己的私有数据目录保存提示状态，不增加权限，不自动下载、安装或批准进程。
 
 ## 功能与边界
 
-- 补全内置函数、当前文件函数/变量和导入函数；悬停显示函数说明。
+- 补全内置函数、当前文件函数/变量和导入函数；悬停显示函数说明。函数补全复用已有调用括号并保留参数。
 - 检查语法、函数、参数和导入错误，支持只有函数定义的模块。
 - 定义跳转支持本地函数、变量、参数、导入函数、模块别名及 import 路径，优先读取未保存内容。
 - 默认使用 4 空格缩进，尊重编辑器的显式覆盖；格式化保留字符串、注释及文件末尾有无换行的状态，不会把单行表达式自动拆成多行。

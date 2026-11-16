@@ -1,7 +1,7 @@
 # 发布到 OpenIDEA 插件市场
 
 源码仓库：[qiany-sui/openidea-jslt](https://github.com/qiany-sui/openidea-jslt)。
-0.1.5 已[正式发布](https://github.com/qiany-sui/openidea-jslt/releases/tag/v0.1.5)，包含默认 4 空格缩进及末尾换行保留修复；插件和语言服务版本同步升级。
+0.1.6 正在准备发布，修复已有调用括号前接受函数补全时重复插入括号；插件和语言服务同步升级。
 [0.1.5 市场更新 PR #176](https://github.com/l0ng-ai/openidea-plugins/pull/176) 已于 2026-11-16 合并；发布 CI 通过，社区及官方市场索引已同步到 0.1.5，确认上架。
 0.1.4 的[市场更新 PR #145](https://github.com/l0ng-ai/openidea-plugins/pull/145) 已合并上架。
 语言服务继续通过 Release 分发并单独安装，未注册 npm 包。验证结果见 [AGENTS.md](AGENTS.md)。
@@ -10,8 +10,8 @@
 
 ## 发行内容
 
-- `nc.jslt-0.1.5.oiplugin`：语言识别、高亮组件与语言服务命令声明。
-- `openidea-jslt-language-server-0.1.5.tgz`：供 npm 离线安装的独立服务及全部依赖，无安装脚本。
+- `nc.jslt-0.1.6.oiplugin`：语言识别、高亮组件与语言服务命令声明。
+- `openidea-jslt-language-server-0.1.6.tgz`：供 npm 离线安装的独立服务及全部依赖，无安装脚本。
 - `SHA256SUMS`：最终发行文件的 SHA-256。
 
 语言服务 tgz 随 GitHub Release 分发即可，无需先在 npm registry 发布同名包。
@@ -31,9 +31,9 @@
 6. 在项目根目录运行：
 
    ```sh
-   openidea-plugin check dist/nc.jslt-0.1.5.oiplugin
-   openidea-plugin pack . --key "$JSLT_PUBLISHER_KEY" --publisher nc --out dist/nc.jslt-0.1.5.oiplugin
-   openidea-plugin check dist/nc.jslt-0.1.5.oiplugin
+   openidea-plugin check dist/nc.jslt-0.1.6.oiplugin
+   openidea-plugin pack . --key "$JSLT_PUBLISHER_KEY" --publisher nc --out dist/nc.jslt-0.1.6.oiplugin
+   openidea-plugin check dist/nc.jslt-0.1.6.oiplugin
    ```
 
    官方 pack 会收集清单引用的文件及 LICENSE、NOTICE、README。签名后不要再运行
@@ -42,7 +42,7 @@
 
    ```sh
    cd dist
-   shasum -a 256 nc.jslt-0.1.5.oiplugin openidea-jslt-language-server-0.1.5.tgz > SHA256SUMS
+   shasum -a 256 nc.jslt-0.1.6.oiplugin openidea-jslt-language-server-0.1.6.tgz > SHA256SUMS
    shasum -a 256 -c SHA256SUMS
    ```
 

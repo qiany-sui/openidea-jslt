@@ -28,7 +28,7 @@ jobs:
           echo '00ad9c6062f60b36efbacf21eefd68a00135f2d4ebb0eded360c10670dc8df8c  '"$RUNNER_TEMP/openidea-plugin.gz" | sha256sum --check
           gzip --decompress "$RUNNER_TEMP/openidea-plugin.gz"
           chmod +x "$RUNNER_TEMP/openidea-plugin"
-          "$RUNNER_TEMP/openidea-plugin" check dist/nc.jslt-0.1.5.oiplugin
+          "$RUNNER_TEMP/openidea-plugin" check dist/nc.jslt-0.1.6.oiplugin
       - uses: actions/upload-artifact@v4
         with:
           name: unsigned-release

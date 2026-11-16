@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL, fileURLToPath } from "node:url";
 import { compile, toJS } from "jslt-js";
+import { TextDocument } from "vscode-languageserver-textdocument";
 
 async function client(t) {
   const entry = process.env.JSLT_SERVER || fileURLToPath(new URL("../src/server.js", import.meta.url));
@@ -91,6 +92,76 @@ test("completes variables and builtins and returns builtin hover documentation",
   c.change(uri, "string(.value)", 3);
   const hover = await c.request("textDocument/hover", { textDocument: { uri }, position: { line: 0, character: 3 } });
   assert.match(hover.contents.value, /string\(/);
+});
+
+async function completeAtMarker(c, uri, input, label) {
+  const offset = input.indexOf("|");
+  assert.notEqual(offset, -1);
+  const text = input.slice(0, offset) + input.slice(offset + 1);
+  const doc = TextDocument.create(uri, "jslt", 1, text);
+  c.open(uri, text);
+  const items = await c.request("textDocument/completion", {
+    textDocument: { uri }, position: doc.positionAt(offset),
+  });
+  const item = items.find(item => item.label === label);
+  assert.ok(item, `missing completion: ${label}`);
+  return TextDocument.applyEdits(doc, [item.textEdit]);
+}
+
+test("builtin completion reuses existing call parentheses and preserves arguments", async t => {
+  const c = await client(t);
+  const cases = [
+    ["str|(42)", "string", "string(42)"],
+    ["string|(42)", "string", "string(42)"],
+    ["ran| ()", "random", "random ()"],
+    ["str| \t (42)", "string", "string \t (42)"],
+    ["str|\r\n(42)", "string", "string\r\n(42)"],
+    ['{"中文🦊": str|(42)}', "string", '{"中文🦊": string(42)}'],
+    ["ran|()", "random", "random()"],
+    ["str|(size([1, 2]))", "string", "string(size([1, 2]))"],
+  ];
+  for (const [i, [input, label, expected]] of cases.entries()) {
+    await t.test(input, async () => {
+      const uri = `file:///tmp/jslt-completion-existing-${i}.jslt`;
+      assert.equal(await completeAtMarker(c, uri, input, label), expected);
+      c.change(uri, expected);
+      assert.deepEqual(await c.diagnostics(uri, p => p.diagnostics.length === 0), []);
+    });
+  }
+});
+
+test("local and imported function completion reuses existing parentheses for either arity", async t => {
+  const c = await client(t);
+  c.open("file:///tmp/jslt-completion-library.jslt", "def twice(x) $x * 2\ndef answer() 42\n");
+  const cases = [
+    ["def twice(x) $x * 2\ntwi|(21)", "twice", "def twice(x) $x * 2\ntwice(21)"],
+    ["def answer() 42\nans|()", "answer", "def answer() 42\nanswer()"],
+    ['import "jslt-completion-library.jslt" as lib\nlib:twi|(21)', "twice", 'import "jslt-completion-library.jslt" as lib\nlib:twice(21)'],
+    ['import "jslt-completion-library.jslt" as lib\nlib:ans| ()', "answer", 'import "jslt-completion-library.jslt" as lib\nlib:answer ()'],
+  ];
+  for (const [i, [input, label, expected]] of cases.entries()) {
+    await t.test(label + i, async () => {
+      const uri = `file:///tmp/jslt-completion-function-${i}.jslt`;
+      assert.equal(await completeAtMarker(c, uri, input, label), expected);
+      c.change(uri, expected);
+      assert.deepEqual(await c.diagnostics(uri, p => p.diagnostics.length === 0), []);
+    });
+  }
+});
+
+test("completion still inserts call parentheses when there are none after the cursor", async t => {
+  const c = await client(t);
+  const cases = [
+    ["str|", "string", "string("],
+    ["ran|", "random", "random()"],
+    ["def twice(x) $x * 2\ntwi|", "twice", "def twice(x) $x * 2\ntwice("],
+    ["def answer() 42\nans|", "answer", "def answer() 42\nanswer()"],
+    ["str| + (42)", "string", "string( + (42)"],
+    ["str| // (comment)", "string", "string( // (comment)"],
+  ];
+  for (const [i, [input, label, expected]] of cases.entries()) {
+    assert.equal(await completeAtMarker(c, `file:///tmp/jslt-completion-new-${i}.jslt`, input, label), expected);
+  }
 });
 
 test("formatting uses the language defaults to match the IDEA sample layout", async t => {
